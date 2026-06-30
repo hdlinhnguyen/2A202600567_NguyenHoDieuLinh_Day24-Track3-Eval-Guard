@@ -1,6 +1,7 @@
 # CI/CD Blueprint: RAG Eval + Guardrail Stack
 
 **Sinh viên:** Nguyễn Hồ Diệu Linh  
+**MSV:** 2A202600567
 **Ngày:** 2026-06-30
 
 ---
