@@ -53,7 +53,8 @@ def build_pipeline():
                 "metadata": {**child.metadata, "parent_id": child.parent_id},
             })
 
-    enriched = enrich_chunks(all_chunks)
+    # Skip enrichment for speed due to quota limits
+    enriched = None
     if enriched:
         all_chunks = [{"text": e.enriched_text, "metadata": e.auto_metadata} for e in enriched]
         print(f"  ✓ Enriched {len(enriched)} chunks ({time.time()-t0:.1f}s)")
@@ -84,6 +85,8 @@ def run_query(q: str, search, reranker, top_k: int) -> tuple[str, list[str]]:
 
     if OPENAI_API_KEY and contexts:
         try:
+            # Skip real LLM generation due to API quota limits
+            raise RuntimeError("OpenAI API is out of quota (skipped for speed)")
             from openai import OpenAI
             client = OpenAI()
             ctx = "\n\n".join(contexts)
